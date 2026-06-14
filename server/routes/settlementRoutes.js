@@ -1,9 +1,8 @@
 const express = require("express");
-
 const router = express.Router();
 
 const {
-  getSettlement,
+  getSettlement
 } = require("../controllers/settlementController");
 
 router.get("/:groupId", getSettlement);

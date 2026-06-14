@@ -1,22 +1,81 @@
+import { useEffect, useState } from "react";
+import API from "../services/api";
+import Layout from "../components/Layout";
+
 function Settlement() {
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/";
+  const [data, setData] = useState([]);
+
+  const loadSettlement = async () => {
+
+    try {
+
+      const res =
+        await API.get("/settlement/1");
+
+      setData(res.data);
+
+    } catch (err) {
+
+      console.log(err);
+
+    }
+
   };
 
-  return (
-    <div style={{ padding: "30px" }}>
-      <h1>🤝 Settlement Page</h1>
+  useEffect(() => {
 
-      <button
-        className="btn btn-danger mt-3"
-        onClick={logout}
-      >
-        Logout
-      </button>
-    </div>
+    loadSettlement();
+
+  }, []);
+
+  return (
+
+    <Layout>
+
+      <h2>Settlement Suggestions</h2>
+
+      <table className="table table-bordered mt-3">
+
+        <thead>
+
+          <tr>
+
+            <th>From</th>
+
+            <th>To</th>
+
+            <th>Amount</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {Array.isArray(data) &&
+            data.map((s, i) => (
+
+              <tr key={i}>
+
+                <td>{s.from}</td>
+
+                <td>{s.to}</td>
+
+                <td>₹{s.amount}</td>
+
+              </tr>
+
+            ))}
+
+        </tbody>
+
+      </table>
+
+    </Layout>
+
   );
+
 }
 
 export default Settlement;

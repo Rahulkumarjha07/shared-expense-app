@@ -1,29 +1,26 @@
-const settlementService =
-require("../services/settlementService");
+const balanceService = require("../services/balanceService");
 
-const getSettlement = (req, res) => {
+const getSettlement = async (req, res) => {
+
+  try {
 
     const groupId = req.params.groupId;
 
-    settlementService.generateSettlements(
-        groupId,
-        (err, data) => {
+    const result =
+      await balanceService.calculateSettlement(groupId);
 
-            if (err) {
+    res.json(result);
 
-                return res.status(500).json({
-                    message: "Settlement failed"
-                });
+  } catch (err) {
 
-            }
+    res.status(500).json({
+      message: err.message
+    });
 
-            res.status(200).json(data);
-
-        }
-    );
+  }
 
 };
 
 module.exports = {
-    getSettlement
+  getSettlement
 };
