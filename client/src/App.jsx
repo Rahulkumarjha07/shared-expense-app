@@ -10,6 +10,7 @@ import Balance from "./pages/Balance";
 import Settlement from "./pages/Settlement";
 import Members from "./pages/Members";
 import Charts from "./pages/Charts";
+import SettlementHistory from "./pages/SettlementHistory";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
 <Route path="/settlement" element={<Settlement />} /> 
 <Route path="/members" element={<Members />} />
 <Route path="/charts" element={<Charts />} />
+<Route
+path="/settlement-history"
+element={<SettlementHistory/>}
+/>
       </Routes>
     </BrowserRouter>
   );

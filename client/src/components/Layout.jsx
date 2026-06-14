@@ -47,6 +47,13 @@ to="/charts"
 Charts
 </Link>
 
+<Link
+className="btn btn-outline-light w-100 mb-2"
+to="/settlement-history"
+>
+Settlement History
+</Link>
+
         </div>
 
         <div className="col-10 p-4">
