@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoutes");
 const groupRoutes = require("./routes/groupRoutes");
 const memberRoutes = require("./routes/memberRoutes");
 const expenseRoutes=require("./routes/expenseRoutes");
+const balanceRoutes =require("./routes/balanceRoutes");
 
 const app = express();
 
@@ -20,6 +21,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/members", memberRoutes);
 app.use("/api/expenses",expenseRoutes);
+
+app.use(
+"/api/balance",
+balanceRoutes
+);
 
 app.get("/", (req, res) => {
     res.send("Shared Expense API Running...");
