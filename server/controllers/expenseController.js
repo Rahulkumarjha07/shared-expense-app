@@ -62,6 +62,53 @@ const createExpense = (req, res) => {
 
 };
 
-module.exports={
-    createExpense
+
+const getExpenses = (req, res) => {
+
+  const { groupId } = req.params;
+
+  expenseModel.getExpensesByGroup(
+    groupId,
+    (err, result) => {
+
+      if (err) {
+        return res.status(500).json({
+          message: "Database Error"
+        });
+      }
+
+      res.status(200).json(result);
+
+    }
+  );
+
+};
+
+
+const deleteExpense = (req, res) => {
+
+  const { id } = req.params;
+
+  expenseModel.deleteExpense(id, (err, result) => {
+
+    if (err) {
+      return res.status(500).json({
+        message: "Delete failed"
+      });
+    }
+
+    res.json({
+      message: "Expense deleted"
+    });
+
+  });
+
+};
+
+
+
+module.exports = {
+  createExpense,
+  getExpenses,
+  deleteExpense
 };

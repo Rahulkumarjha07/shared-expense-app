@@ -63,7 +63,48 @@ const addExpenseShare = (
 
 };
 
+
+
+// Get Expenses By Group
+const getExpensesByGroup = (groupId, callback) => {
+  const sql = `
+    SELECT
+      e.*,
+      u.name AS paid_by_name
+    FROM expenses e
+    JOIN users u
+      ON e.paid_by = u.id
+    WHERE e.group_id = ?
+    ORDER BY e.expense_date DESC
+  `;
+
+  db.query(sql, [groupId], callback);
+};
+
+
+const deleteExpense = (id, callback) => {
+
+  db.query(
+    "DELETE FROM expense_shares WHERE expense_id = ?",
+    [id],
+    (err) => {
+
+      if (err) return callback(err);
+
+      db.query(
+        "DELETE FROM expenses WHERE id = ?",
+        [id],
+        callback
+      );
+
+    }
+  );
+
+};
+
 module.exports = {
-    createExpense,
-    addExpenseShare
+  createExpense,
+  addExpenseShare,
+  getExpensesByGroup,
+  deleteExpense
 };

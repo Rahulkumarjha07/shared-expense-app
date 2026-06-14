@@ -1,11 +1,17 @@
-const express=require("express");
+const express = require("express");
 
-const router=express.Router();
+const router = express.Router();
 
 const {
-createExpense
-}=require("../controllers/expenseController");
+  createExpense,
+  getExpenses,deleteExpense
+} = require("../controllers/expenseController");
 
-router.post("/",createExpense);
+// Create Expense
+router.post("/", createExpense);
 
-module.exports=router;
+// Get All Expenses of a Group
+router.get("/group/:groupId", getExpenses);
+router.delete("/:id", deleteExpense);
+
+module.exports = router;

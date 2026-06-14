@@ -10,6 +10,10 @@ const groupRoutes = require("./routes/groupRoutes");
 const memberRoutes = require("./routes/memberRoutes");
 const expenseRoutes=require("./routes/expenseRoutes");
 const balanceRoutes =require("./routes/balanceRoutes");
+const settlementRoutes =
+require("./routes/settlementRoutes");
+
+const importRoutes=require("./routes/importRoutes");    
 
 const app = express();
 
@@ -21,10 +25,16 @@ app.use("/api/auth", authRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/members", memberRoutes);
 app.use("/api/expenses",expenseRoutes);
+app.use("/api/import",importRoutes);
 
 app.use(
 "/api/balance",
 balanceRoutes
+);
+
+app.use(
+    "/api/settlement",
+    settlementRoutes
 );
 
 app.get("/", (req, res) => {
