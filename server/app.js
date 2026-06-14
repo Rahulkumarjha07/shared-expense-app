@@ -6,6 +6,7 @@ const express = require("express");
 const cors = require("cors");
 
 const authRoutes = require("./routes/authRoutes");
+const groupRoutes = require("./routes/groupRoutes");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Register auth routes
 app.use("/api/auth", authRoutes);
+app.use("/api/groups", groupRoutes);
 
 app.get("/", (req, res) => {
     res.send("Shared Expense API Running...");
