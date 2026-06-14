@@ -40,6 +40,12 @@ function Layout({ children }) {
           <Link className="btn btn-outline-light w-100" to="/settlement">
             Settlement
           </Link>
+          <Link
+className="btn btn-outline-light w-100 mb-2"
+to="/charts"
+>
+Charts
+</Link>
 
         </div>
 
