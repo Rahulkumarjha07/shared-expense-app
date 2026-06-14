@@ -6,20 +6,16 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const [email,setEmail]=useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [password,setPassword]=useState("");
+  const login = async () => {
 
-  const login=async()=>{
+    try {
 
-    try{
-
-      const res=
-      await API.post("/auth/login",{
-
+      const res = await API.post("/auth/login", {
         email,
         password
-
       });
 
       localStorage.setItem(
@@ -27,65 +23,63 @@ function Login() {
         res.data.token
       );
 
+      alert("Login Successful");
+
       navigate("/dashboard");
 
-    }
-    catch(err){
-
-      alert("Login Failed");
+    } catch (err) {
 
       console.log(err);
+
+      alert(
+        err.response?.data?.message ||
+        "Login Failed"
+      );
 
     }
 
   };
 
-  return(
+  return (
 
-    <div style={{padding:"40px"}}>
+    <div
+      style={{
+        maxWidth: "400px",
+        margin: "80px auto"
+      }}
+    >
 
-      <h1>🚀 Shared Expense App</h1>
-
-      <input
-
-      placeholder="Email"
-
-      value={email}
-
-      onChange={(e)=>setEmail(e.target.value)}
-
-      />
-
-      <br/><br/>
+      <h1>🔐 Login</h1>
 
       <input
-
-      type="password"
-
-      placeholder="Password"
-
-      value={password}
-
-      onChange={(e)=>setPassword(e.target.value)}
-
+        className="form-control mb-3"
+        placeholder="Email"
+        value={email}
+        onChange={(e)=>setEmail(e.target.value)}
       />
 
-      <br/><br/>
+      <input
+        type="password"
+        className="form-control mb-3"
+        placeholder="Password"
+        value={password}
+        onChange={(e)=>setPassword(e.target.value)}
+      />
 
-      <button onClick={login}>
-
-      Login
-
+      <button
+        className="btn btn-primary w-100"
+        onClick={login}
+      >
+        Login
       </button>
 
       <br/><br/>
 
       <button
-      onClick={()=>navigate("/register")}
+        className="btn btn-secondary w-100"
+        onClick={()=>navigate("/register")}
       >
-
-      Register
-
+        Register
       </button>
 
     </div>
