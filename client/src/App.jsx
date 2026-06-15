@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Groups from "./pages/Groups";
 import Expenses from "./pages/Expenses";
@@ -14,24 +15,87 @@ import SettlementHistory from "./pages/SettlementHistory";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/groups" element={<Groups />} />
-<Route path="/expenses" element={<Expenses />} />
-<Route path="/balance" element={<Balance />} />
-<Route path="/settlement" element={<Settlement />} /> 
-<Route path="/members" element={<Members />} />
-<Route path="/charts" element={<Charts />} />
-<Route
-path="/settlement-history"
-element={<SettlementHistory/>}
-/>
-      </Routes>
-    </BrowserRouter>
-  );
+  <BrowserRouter>
+    <Routes>
+
+      <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/groups"
+        element={
+          <ProtectedRoute>
+            <Groups />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/members"
+        element={
+          <ProtectedRoute>
+            <Members />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/expenses"
+        element={
+          <ProtectedRoute>
+            <Expenses />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/balance"
+        element={
+          <ProtectedRoute>
+            <Balance />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/settlement"
+        element={
+          <ProtectedRoute>
+            <Settlement />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/charts"
+        element={
+          <ProtectedRoute>
+            <Charts />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/settlement-history"
+        element={
+          <ProtectedRoute>
+            <SettlementHistory />
+          </ProtectedRoute>
+        }
+      />
+
+    </Routes>
+  </BrowserRouter>
+);
 }
 
 export default App;
