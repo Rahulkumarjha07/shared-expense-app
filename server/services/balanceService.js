@@ -2,73 +2,81 @@ const db = require("../config/db");
 
 const calculateBalance = (groupId, callback) => {
 
-    const sql = `
+  const sql = `
     SELECT
-        u.id,
-        u.name,
+      u.id,
+      u.name,
 
-        IFNULL((
-            SELECT SUM(e.amount)
-            FROM expenses e
-            WHERE e.paid_by=u.id
-            AND e.group_id=?
-        ),0) AS total_paid,
+      IFNULL((
+        SELECT SUM(e.amount)
+        FROM expenses e
+        WHERE e.paid_by = u.id
+        AND e.group_id = ?
+      ),0) AS total_paid,
 
-        IFNULL((
-            SELECT SUM(es.share_amount)
-            FROM expense_shares es
-            JOIN expenses e
-            ON es.expense_id=e.id
-            WHERE es.user_id=u.id
-            AND e.group_id=?
-        ),0) AS total_share
+      IFNULL((
+        SELECT SUM(es.share_amount)
+        FROM expense_shares es
+        JOIN expenses e
+        ON es.expense_id = e.id
+        WHERE es.user_id = u.id
+        AND e.group_id = ?
+      ),0) AS total_share
 
     FROM users u
-    WHERE u.id IN
-    (
-        SELECT user_id
-        FROM group_members
-        WHERE group_id=?
+
+    WHERE u.id IN (
+
+      SELECT user_id
+      FROM group_members
+      WHERE group_id = ?
+
     );
-    `;
+  `;
 
-    db.query(
-        sql,
-        [groupId, groupId, groupId],
-        (err, result) => {
+  db.query(
 
-            if(err){
-                return callback(err);
-            }
+    sql,
 
-            const balances = result.map(user=>{
+    [groupId, groupId, groupId],
 
-                return{
+    (err, result) => {
 
-                    id:user.id,
+      if (err) {
+        return callback(err);
+      }
 
-                    name:user.name,
+      const balances = result.map((user) => ({
 
-                    total_paid:Number(user.total_paid),
+        id: user.id,
 
-                    total_share:Number(user.total_share),
+        name: user.name,
 
-                    net_balance:
-                    Number(user.total_paid)
-                    -
-                    Number(user.total_share)
+        total_paid: Number(user.total_paid),
 
-                };
+        total_share: Number(user.total_share),
 
-            });
+        net_balance:
+          Number(user.total_paid) -
+          Number(user.total_share)
 
-            callback(null,balances);
+      }));
 
-        }
-    );
+      callback(null, balances);
+
+    }
+
+  );
 
 };
 
-module.exports={
-    calculateBalance
+// ⭐ Alias for settlement
+const calculateSettlement = calculateBalance;
+
+module.exports = {
+
+  calculateBalance,
+
+  calculateSettlement
+
 };

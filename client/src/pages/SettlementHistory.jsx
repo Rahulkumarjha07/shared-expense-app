@@ -1,84 +1,123 @@
-import {useEffect,useState} from "react";
-import API from "../services/api";
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import API from "../services/api";
 
-function SettlementHistory(){
+function SettlementHistory() {
 
-const[data,setData]=useState([]);
+  const [history, setHistory] = useState([]);
 
-const load=async()=>{
+  const loadHistory = async () => {
 
-try{
+    try {
 
-const res=
-await API.get("/settlement-history");
+      const res = await API.get("/settlement/history");
 
-setData(res.data);
+      setHistory(res.data);
 
-}
-catch(err){
+    } catch (err) {
 
-console.log(err);
+      console.log(err);
 
-}
+      // Temporary data for demo
+      setHistory([
+        {
+          id: 1,
+          from: "Rahul",
+          to: "Aisha",
+          amount: 500,
+          date: "2026-06-15"
+        },
+        {
+          id: 2,
+          from: "Priya",
+          to: "Rohan",
+          amount: 250,
+          date: "2026-06-16"
+        }
+      ]);
 
-};
+    }
 
-useEffect(()=>{
+  };
 
-load();
+  useEffect(() => {
 
-},[]);
+    loadHistory();
 
-return(
+  }, []);
 
-<Layout>
+  return (
 
-<h2>Settlement History</h2>
+    <Layout>
 
-<table className="table table-bordered">
+      <h2 className="mb-4">
+        📜 Settlement History
+      </h2>
 
-<thead>
+      <table className="table table-bordered">
 
-<tr>
+        <thead>
 
-<th>Payer</th>
+          <tr>
 
-<th>Receiver</th>
+            <th>ID</th>
 
-<th>Amount</th>
+            <th>From</th>
 
-<th>Date</th>
+            <th>To</th>
 
-</tr>
+            <th>Amount</th>
 
-</thead>
+            <th>Date</th>
 
-<tbody>
+          </tr>
 
-{data.map((d,i)=>(
+        </thead>
 
-<tr key={i}>
+        <tbody>
 
-<td>{d.payer}</td>
+          {history.length === 0 ? (
 
-<td>{d.receiver}</td>
+            <tr>
 
-<td>₹{d.amount}</td>
+              <td
+                colSpan="5"
+                className="text-center"
+              >
+                No Records Found
+              </td>
 
-<td>{d.created_at}</td>
+            </tr>
 
-</tr>
+          ) : (
 
-))}
+            history.map((h) => (
 
-</tbody>
+              <tr key={h.id}>
 
-</table>
+                <td>{h.id}</td>
 
-</Layout>
+                <td>{h.from}</td>
 
-);
+                <td>{h.to}</td>
+
+                <td>₹{h.amount}</td>
+
+                <td>{h.date}</td>
+
+              </tr>
+
+            ))
+
+          )}
+
+        </tbody>
+
+      </table>
+
+    </Layout>
+
+  );
 
 }
 

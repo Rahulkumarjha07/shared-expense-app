@@ -1,6 +1,38 @@
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import API from "../services/api";
 
 function Dashboard() {
+
+  const [stats, setStats] = useState({
+
+    totalGroups: 0,
+    totalExpenses: 0,
+    totalExpense: 0
+
+  });
+
+  const loadStats = async () => {
+
+    try {
+
+      const res = await API.get("/dashboard");
+
+      setStats(res.data);
+
+    } catch (err) {
+
+      console.log(err);
+
+    }
+
+  };
+
+  useEffect(() => {
+
+    loadStats();
+
+  }, []);
 
   return (
 
@@ -18,7 +50,9 @@ function Dashboard() {
 
             <h5>Total Groups</h5>
 
-            <h2>👥</h2>
+            <h2>
+              👥 {stats.totalGroups}
+            </h2>
 
           </div>
 
@@ -30,7 +64,9 @@ function Dashboard() {
 
             <h5>Total Expenses</h5>
 
-            <h2>💸</h2>
+            <h2>
+              💸 {stats.totalExpenses}
+            </h2>
 
           </div>
 
@@ -40,9 +76,11 @@ function Dashboard() {
 
           <div className="card shadow p-4">
 
-            <h5>Balance</h5>
+            <h5>Total Amount</h5>
 
-            <h2>💰</h2>
+            <h2>
+              💰 ₹{stats.totalExpense}
+            </h2>
 
           </div>
 
