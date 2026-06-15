@@ -109,9 +109,9 @@ const login = async (req, res) => {
       });
     });
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    console.log(err.response?.status);
+  console.log(err.response?.data);
+  alert(JSON.stringify(err.response?.data));
   }
 };
 
