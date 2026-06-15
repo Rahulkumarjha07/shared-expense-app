@@ -1,78 +1,108 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
+import Layout from "../components/Layout";
 
-function Import(){
+function Import() {
 
-const[file,setFile]=useState(null);
+  const [file, setFile] = useState(null);
 
-const upload=async()=>{
+  const navigate = useNavigate();
 
-const formData=new FormData();
+  const upload = async () => {
 
-formData.append("file",file);
+    if (!file) {
+      alert("Please select a CSV file");
+      return;
+    }
 
-try{
+    const formData = new FormData();
 
-const res=await API.post(
+    formData.append("file", file);
 
-"/import",
+    try {
 
-formData,
+      const res = await API.post(
 
-{
+        "/import",
 
-headers:{
+        formData,
 
-"Content-Type":
+        {
 
-"multipart/form-data"
+          headers: {
 
-}
+            "Content-Type":
+              "multipart/form-data"
 
-}
+          }
 
-);
+        }
 
-alert("Imported Successfully");
+      );
 
-console.log(res.data);
+      alert(
 
-}
-catch(err){
+        `Import Successful!\n\n` +
+        `Total Rows: ${res.data.totalRows}\n` +
+        `Imported Rows: ${res.data.importedRows}\n` +
+        `Anomalies: ${res.data.anomaliesDetected}`
 
-console.log(err);
+      );
 
-}
+      navigate("/dashboard");
 
-};
+    }
 
-return(
+    catch (err) {
 
-<div>
+      console.log(err);
 
-<h2>Import CSV</h2>
+      alert("Import Failed");
 
-<input
+    }
 
-type="file"
+  };
 
-accept=".csv"
+  return (
 
-onChange={(e)=>setFile(e.target.files[0])}
+    <Layout>
 
-/>
+      <div className="container mt-4">
 
-<br/><br/>
+        <h2>📄 Import CSV</h2>
 
-<button onClick={upload}>
+        <input
 
-Import
+          type="file"
 
-</button>
+          accept=".csv"
 
-</div>
+          className="form-control mt-3"
 
-);
+          onChange={(e) =>
+            setFile(e.target.files[0])
+          }
+
+        />
+
+        <button
+
+          className="btn btn-primary mt-3"
+
+          onClick={upload}
+
+        >
+
+          Import CSV
+
+        </button>
+
+      </div>
+
+    </Layout>
+
+  );
 
 }
 

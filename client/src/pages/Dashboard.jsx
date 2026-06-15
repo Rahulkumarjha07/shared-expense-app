@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import API from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
 
-  const [stats, setStats] = useState({
+  const navigate = useNavigate();   // ✅ HERE
 
+  const [stats, setStats] = useState({
     totalGroups: 0,
     totalExpenses: 0,
     totalExpense: 0
-
   });
 
   const loadStats = async () => {
@@ -42,6 +43,13 @@ function Dashboard() {
         📊 Dashboard
       </h1>
 
+      <button
+        className="btn btn-success mb-3"
+        onClick={() => navigate("/import")}
+      >
+        📄 Import CSV
+      </button>
+
       <div className="row">
 
         <div className="col-md-4">
@@ -50,9 +58,7 @@ function Dashboard() {
 
             <h5>Total Groups</h5>
 
-            <h2>
-              👥 {stats.totalGroups}
-            </h2>
+            <h2>👥 {stats.totalGroups}</h2>
 
           </div>
 
@@ -64,9 +70,7 @@ function Dashboard() {
 
             <h5>Total Expenses</h5>
 
-            <h2>
-              💸 {stats.totalExpenses}
-            </h2>
+            <h2>💸 {stats.totalExpenses}</h2>
 
           </div>
 
@@ -78,9 +82,7 @@ function Dashboard() {
 
             <h5>Total Amount</h5>
 
-            <h2>
-              💰 ₹{stats.totalExpense}
-            </h2>
+            <h2>💰 ₹{stats.totalExpense}</h2>
 
           </div>
 
