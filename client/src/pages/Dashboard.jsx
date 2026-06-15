@@ -1,84 +1,58 @@
-import { useEffect, useState } from "react";
-import API from "../services/api";
 import Layout from "../components/Layout";
 
-function Dashboard(){
+function Dashboard() {
 
-const [stats,setStats]=useState({});
+  return (
 
-const loadStats=async()=>{
+    <Layout>
 
-try{
+      <h1 className="mb-4">
+        📊 Dashboard
+      </h1>
 
-const res=
-await API.get("/dashboard");
+      <div className="row">
 
-setStats(res.data);
+        <div className="col-md-4">
 
-}
-catch(err){
+          <div className="card shadow p-4">
 
-console.log(err);
+            <h5>Total Groups</h5>
 
-}
+            <h2>👥</h2>
 
-};
+          </div>
 
-useEffect(()=>{
+        </div>
 
-loadStats();
+        <div className="col-md-4">
 
-},[]);
+          <div className="card shadow p-4">
 
-return(
+            <h5>Total Expenses</h5>
 
-<Layout>
+            <h2>💸</h2>
 
-<h2>Dashboard</h2>
+          </div>
 
-<div className="row">
+        </div>
 
-<div className="col-md-4">
+        <div className="col-md-4">
 
-<div className="card p-3 shadow">
+          <div className="card shadow p-4">
 
-<h5>Total Groups</h5>
+            <h5>Balance</h5>
 
-<h2>{stats.totalGroups}</h2>
+            <h2>💰</h2>
 
-</div>
+          </div>
 
-</div>
+        </div>
 
-<div className="col-md-4">
+      </div>
 
-<div className="card p-3 shadow">
+    </Layout>
 
-<h5>Total Expenses</h5>
-
-<h2>{stats.totalExpenses}</h2>
-
-</div>
-
-</div>
-
-<div className="col-md-4">
-
-<div className="card p-3 shadow">
-
-<h5>Total Amount</h5>
-
-<h2>{stats.totalExpenses}</h2>
-
-</div>
-
-</div>
-
-</div>
-
-</Layout>
-
-);
+  );
 
 }
 

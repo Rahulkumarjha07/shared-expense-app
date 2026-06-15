@@ -13,7 +13,13 @@ const balanceRoutes =require("./routes/balanceRoutes");
 const settlementRoutes =
 require("./routes/settlementRoutes");
 
-const importRoutes=require("./routes/importRoutes");    
+const importRoutes=require("./routes/importRoutes");   
+
+const dashboardRoutes =
+require("./routes/dashboardRoutes");
+
+const settlementHistoryRoutes =
+require("./routes/settlementHistoryRoutes");
 
 const app = express();
 
@@ -28,6 +34,11 @@ app.use("/api/expenses",expenseRoutes);
 app.use("/api/import",importRoutes);
 
 app.use(
+"/api/dashboard",
+dashboardRoutes
+);
+
+app.use(
 "/api/balance",
 balanceRoutes
 );
@@ -40,6 +51,11 @@ app.use(
 app.get("/", (req, res) => {
     res.send("Shared Expense API Running...");
 });
+
+app.use(
+"/api/settlement-history",
+settlementHistoryRoutes
+);
 
 const PORT = process.env.PORT || 5000;
 

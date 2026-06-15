@@ -102,9 +102,37 @@ const deleteExpense = (id, callback) => {
 
 };
 
+const updateExpense = (id, data, callback) => {
+
+  const sql = `
+    UPDATE expenses
+    SET
+      title=?,
+      amount=?,
+      currency=?,
+      split_type=?
+    WHERE id=?
+  `;
+
+  db.query(
+    sql,
+    [
+      data.title,
+      data.amount,
+      data.currency,
+      data.split_type,
+      id
+    ],
+    callback
+  );
+
+};
+
+
 module.exports = {
   createExpense,
   addExpenseShare,
   getExpensesByGroup,
-  deleteExpense
+  deleteExpense,
+  updateExpense
 };

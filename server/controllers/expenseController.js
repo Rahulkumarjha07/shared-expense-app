@@ -106,9 +106,43 @@ const deleteExpense = (req, res) => {
 };
 
 
+const updateExpense = (req,res)=>{
+
+const{id}=req.params;
+
+expenseModel.updateExpense(
+
+id,
+
+req.body,
+
+(err)=>{
+
+if(err){
+
+return res.status(500).json({
+
+message:"Update failed"
+
+});
+
+}
+
+res.json({
+
+message:"Expense updated"
+
+});
+
+}
+
+);
+
+};
 
 module.exports = {
   createExpense,
   getExpenses,
-  deleteExpense
+  deleteExpense,
+  updateExpense
 };
