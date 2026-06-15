@@ -128,11 +128,50 @@ const updateExpense = (id, data, callback) => {
 
 };
 
+const importExpense = (data, callback) => {
+
+  const sql = `
+  INSERT INTO expenses
+  (
+    group_id,
+    title,
+    amount,
+    currency,
+    paid_by,
+    expense_date,
+    split_type
+  )
+  VALUES (?,?,?,?,?,?,?)
+  `;
+
+  db.query(
+
+    sql,
+
+    [
+
+      data.group_id || 1,
+      data.title || "Imported Expense",
+      Number(data.amount) || 0,
+      data.currency || "INR",
+      data.paid_by || 1,
+      data.expense_date || new Date(),
+      data.split_type || "EQUAL"
+
+    ],
+
+    callback
+
+  );
+
+};
+
 
 module.exports = {
   createExpense,
   addExpenseShare,
   getExpensesByGroup,
   deleteExpense,
-  updateExpense
+  updateExpense,
+  importExpense
 };

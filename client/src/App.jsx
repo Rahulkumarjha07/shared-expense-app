@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Import from "./pages/Import";
 
 import Groups from "./pages/Groups";
 import Expenses from "./pages/Expenses";
@@ -20,6 +21,7 @@ function App() {
 
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/import" element={<Import/>}/>
 
       <Route
         path="/dashboard"
